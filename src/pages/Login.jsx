@@ -23,7 +23,7 @@ function Login({ setUser }) {
       />
       <br />
       <button onClick={handleLogin}>Login</button>
-      <p className="hint">Type "admin" for admin access</p>
+
     </div>
   );
 }
