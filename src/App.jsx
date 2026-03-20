@@ -13,46 +13,17 @@ function App() {
     setError("");
     setLoading(true);
     try {
-    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const res = await fetch("https://aryxn20-ai-quiz-backend.hf.space/generate", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
-        messages: [
-          {
-            role: "user",
-            content: `Generate ${count} MCQ questions on ${topic}.
-
-Return ONLY valid JSON.
-Do not include any text, explanation, or markdown.
-
-Format:
-[
-  {
-    "question": "string",
-    "options": {
-      "A": "string",
-      "B": "string",
-      "C": "string",
-      "D": "string"
-    },
-    "answer": "A"
-  }
-]`
-          }
-        ]
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topic, count: parseInt(count) })
     });
 
-    const data = await res.json();
-      console.log("API response:", data);
-      const text = data.choices[0].message.content;
-      const cleanText = text.replace(/```json/g, "").replace(/```/g, "").trim();
-      const parsed = JSON.parse(cleanText);
-      setQuiz(parsed);
+    const result = await res.json();
+    const text = result.result;
+    const cleanText = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    const parsed = JSON.parse(cleanText);
+    setQuiz(parsed);
     } catch (e) {
       console.error("Error:", e);
       setError("Something went wrong. Check console for details.");
