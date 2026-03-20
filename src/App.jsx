@@ -4,9 +4,15 @@ function App() {
   const [topic, setTopic] = useState("");
   const [count, setCount] = useState(5);
   const [quiz, setQuiz] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const generateQuiz = async () => {
+    if (!topic) return;
     setQuiz([]);
+    setError("");
+    setLoading(true);
+    try {
     const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -42,15 +48,16 @@ Format:
     });
 
     const data = await res.json();
-
-    try {
+      console.log("API response:", data);
       const text = data.choices[0].message.content;
       const cleanText = text.replace(/```json/g, "").replace(/```/g, "").trim();
       const parsed = JSON.parse(cleanText);
       setQuiz(parsed);
     } catch (e) {
-      console.log("RAW:", data.choices[0].message.content);
-      alert("AI response parse nahi hua ❌");
+      console.error("Error:", e);
+      setError("Something went wrong. Check console for details.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,7 +77,11 @@ Format:
         onChange={(e) => setCount(e.target.value)}
       />
 
-      <button onClick={generateQuiz}>Generate Quiz</button>
+      <button onClick={generateQuiz} disabled={loading}>
+        {loading ? "Generating..." : "Generate Quiz"}
+      </button>
+
+      {error && <p style={{color: "red", marginTop: "10px"}}>{error}</p>}
 
       {quiz.map((q, i) => (
         <Question key={i} q={q} index={i} />
