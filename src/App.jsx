@@ -18,15 +18,24 @@ function App() {
         messages: [
           {
             role: "user",
-            content: `Generate ${count} MCQ questions on ${topic} in JSON format:
-            [
-              {
-                "question": "...",
-                "options": {"A":"...", "B":"...", "C":"...", "D":"..."},
-                "answer": "A"
-              }
-            ]
-            Return only the JSON array, no extra text.`
+            content: `Generate ${count} MCQ questions on ${topic}.
+
+Return ONLY valid JSON.
+Do not include any text, explanation, or markdown.
+
+Format:
+[
+  {
+    "question": "string",
+    "options": {
+      "A": "string",
+      "B": "string",
+      "C": "string",
+      "D": "string"
+    },
+    "answer": "A"
+  }
+]`
           }
         ]
       })
@@ -36,9 +45,11 @@ function App() {
 
     try {
       const text = data.choices[0].message.content;
-      const parsed = JSON.parse(text);
+      const cleanText = text.replace(/```json/g, "").replace(/```/g, "").trim();
+      const parsed = JSON.parse(cleanText);
       setQuiz(parsed);
     } catch (e) {
+      console.log("RAW:", data.choices[0].message.content);
       alert("AI response parse nahi hua ❌");
     }
   };
