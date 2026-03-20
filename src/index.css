@@ -7,32 +7,90 @@
 body {
   background: radial-gradient(circle at top, #0a0f1c, #02050d);
   color: white;
-  font-family: sans-serif;
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+
+.login {
+  max-width: 400px;
+  margin: 120px auto;
+  padding: 40px;
+  background: #0f172a;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.login h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.login h2 {
+  margin-bottom: 20px;
+  color: #94a3b8;
+}
+
+.hint {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #475569;
 }
 
 .container {
   max-width: 900px;
-  margin: 80px auto;
-  padding: 30px;
+  margin: 0 auto;
+  padding: 20px 30px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.logout {
+  background: #1e293b;
+  color: white;
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+.logout:hover {
+  background: #334155;
+}
+
+h1 {
   text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
 }
 
 input {
   padding: 12px;
-  margin: 10px;
+  margin: 8px;
   border-radius: 10px;
   border: none;
   color: #000;
+  font-size: 15px;
 }
 
 button {
-  padding: 12px 20px;
-  background: cyan;
+  padding: 12px 24px;
+  background: linear-gradient(90deg, cyan, teal);
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 15px;
   color: #000;
+  font-weight: 600;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .card {
@@ -43,12 +101,18 @@ button {
   text-align: left;
 }
 
+.card h3 {
+  margin-bottom: 14px;
+  color: #e2e8f0;
+}
+
 .option {
   background: #1e293b;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 10px 14px;
+  margin: 6px 0;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
 }
 
 .option:hover {
@@ -56,9 +120,45 @@ button {
 }
 
 .correct {
-  background: green;
+  background: #065f46 !important;
 }
 
 .wrong {
-  background: red;
+  background: #7f1d1d !important;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.tab {
+  background: #1e293b;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+}
+
+.tab.active {
+  background: linear-gradient(90deg, cyan, teal);
+  color: #000;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #1e293b;
+}
+
+th {
+  color: #94a3b8;
+  font-weight: 500;
 }
