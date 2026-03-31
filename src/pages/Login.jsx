@@ -4,27 +4,33 @@ function Login({ setUser }) {
   const [name, setName] = useState("");
 
   const handleLogin = () => {
-    if (!name.trim()) return;
-    if (name.trim().toLowerCase() === "admin") {
-      setUser({ role: "admin", name });
+    const trimmedName = name.trim();
+
+    if (!trimmedName) return;
+
+    if (trimmedName.toLowerCase() === "admin") {
+      setUser({ role: "admin", name: trimmedName });
     } else {
-      setUser({ role: "student", name });
+      setUser({ role: "student", name: trimmedName });
     }
   };
 
   return (
-    <div className="login">
-      <h1>🤖 AI Quiz Generator</h1>
-      <h2>Login</h2>
-      <input
-        placeholder="Enter your name"
-        onChange={(e) => setName(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-      />
-      <br />
-      <button onClick={handleLogin}>Login</button>
-
-    </div>
+    <main className="login-shell">
+      <section className="login login-card">
+        <p className="eyebrow">Interview practice workspace</p>
+        <h1>AI Quiz Generator</h1>
+        <h2>Sign in with your name to start a new quiz session.</h2>
+        <input
+          placeholder="Enter your name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          onKeyDown={(event) => event.key === "Enter" && handleLogin()}
+        />
+        <button onClick={handleLogin}>Continue</button>
+        <p className="hint"></p>
+      </section>
+    </main>
   );
 }
 

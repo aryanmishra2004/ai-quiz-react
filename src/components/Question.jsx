@@ -1,34 +1,36 @@
-import { useState } from "react";
-
-function Question({ q, index }) {
-  const [selected, setSelected] = useState(null);
+function Question({ q, index, selected, onSelect, locked }) {
+  const showFeedback = Boolean(selected);
 
   return (
     <div className="card">
-      <h3>Q{index + 1}. {q.question}</h3>
+      <div className="question-header">
+        <span className="question-chip">Question {index + 1}</span>
+        <h3>{q.question}</h3>
+      </div>
 
       {Object.entries(q.options).map(([key, value]) => {
         let className = "option";
 
-        if (selected) {
+        if (showFeedback) {
           if (key === q.answer) className += " correct";
           else if (key === selected) className += " wrong";
         }
 
         return (
-          <div
+          <button
+            type="button"
             key={key}
             className={className}
-            onClick={() => setSelected(key)}
+            onClick={() => onSelect(key)}
+            disabled={locked}
           >
-            {key}. {value}
-          </div>
+            <span className="option-key">{key}</span>
+            <span>{value}</span>
+          </button>
         );
       })}
 
-      {selected && (
-        <p>Correct Answer: {q.answer}</p>
-      )}
+      {showFeedback && <p className="answer-text">Correct answer: {q.answer}</p>}
     </div>
   );
 }
