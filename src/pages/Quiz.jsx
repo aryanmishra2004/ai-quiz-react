@@ -17,7 +17,12 @@ const getRuntimeVariable = (key) => {
   return undefined;
 };
 
-const QUIZ_API_URL = getRuntimeVariable("VITE_QUIZ_API_URL");
+const isLocalHost =
+  typeof window !== "undefined" &&
+  ["localhost", "127.0.0.1"].includes(window.location.hostname);
+
+const QUIZ_API_URL =
+  getRuntimeVariable("VITE_QUIZ_API_URL") ?? (isLocalHost ? null : "/api/generate");
 const GROQ_API_KEY = getRuntimeVariable("VITE_GROQ_API_KEY");
 
 const normalizeQuizPayload = (payload) => {
@@ -64,12 +69,15 @@ const fetchQuizFromBackend = async (topic, count) => {
     body: JSON.stringify({ topic, count }),
   });
 
+  const result = await res.json().catch(() => ({}));
+
   if (!res.ok) {
-    throw new Error(`Backend request failed with status ${res.status}`);
+    throw new Error(
+      result.error || `Backend request failed with status ${res.status}`,
+    );
   }
 
-  const result = await res.json();
-  return normalizeQuizPayload(result.result ?? result);
+  return normalizeQuizPayload(result.result ?? result.questions ?? result);
 };
 
 const fetchQuizFromGroq = async (topic, count) => {

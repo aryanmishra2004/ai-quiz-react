@@ -3,11 +3,10 @@ title: AI Quiz React
 emoji: 🧠
 colorFrom: blue
 colorTo: green
-sdk: static
+sdk: docker
 pinned: false
+app_port: 7860
 short_description: AI-powered quiz generator built with React and Vite
-app_build_command: npm run build
-app_file: dist/index.html
 ---
 
 # AI Quiz React
@@ -29,20 +28,17 @@ npm run build
 
 ## Hugging Face Spaces
 
-This repository is configured for a Static HTML Space.
+This repository is configured for a Docker Space so it can run on the free Hugging Face plan.
 
-Required Space settings:
+Required Space secret:
 
-- SDK: `Static`
-- Build command: `npm run build`
-- App file: `dist/index.html`
+- `GROQ_API_KEY`
 
-If you want quiz generation to work on Hugging Face, add one of these in the Space settings:
+Optional:
 
-- `VITE_QUIZ_API_URL`
-- `VITE_GROQ_API_KEY`
+- `VITE_QUIZ_API_URL` if you want the frontend to use another backend instead
 
 Recommended:
 
-- Use `VITE_QUIZ_API_URL` for production
-- Do not expose a private API key directly in a public frontend Space
+- Add `GROQ_API_KEY` as a Space secret, not a public variable
+- Revoke any Groq key that has already been exposed in the frontend
