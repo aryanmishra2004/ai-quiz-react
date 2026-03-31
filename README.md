@@ -1,6 +1,6 @@
 ---
 title: AI Quiz React
-emoji: Quiz
+emoji: 🧠
 colorFrom: blue
 colorTo: green
 sdk: static
