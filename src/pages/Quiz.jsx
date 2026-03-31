@@ -1,9 +1,24 @@
 import { useState } from "react";
 import Question from "../components/Question";
 
-const QUIZ_API_URL = import.meta.env.VITE_QUIZ_API_URL;
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+const getRuntimeVariable = (key) => {
+  const viteValue = import.meta.env[key];
+
+  if (viteValue) {
+    return viteValue;
+  }
+
+  if (typeof window !== "undefined") {
+    return window.huggingface?.variables?.[key];
+  }
+
+  return undefined;
+};
+
+const QUIZ_API_URL = getRuntimeVariable("VITE_QUIZ_API_URL");
+const GROQ_API_KEY = getRuntimeVariable("VITE_GROQ_API_KEY");
 
 const normalizeQuizPayload = (payload) => {
   if (Array.isArray(payload)) return payload;
