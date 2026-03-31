@@ -1,18 +1,48 @@
-# React + Vite
+---
+title: AI Quiz React
+emoji: Quiz
+colorFrom: blue
+colorTo: green
+sdk: static
+pinned: false
+short_description: AI-powered quiz generator built with React and Vite
+app_build_command: npm run build
+app_file: dist/index.html
+---
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# AI Quiz React
 
-Currently, two official plugins are available:
+A React + Vite quiz app with student and admin views.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Local development
 
-## React Compiler
+```bash
+npm install
+npm run dev
+```
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Build
 
-Note: This will impact Vite dev & build performances.
+```bash
+npm run build
+```
 
-## Expanding the ESLint configuration
+## Hugging Face Spaces
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This repository is configured for a Static HTML Space.
+
+Required Space settings:
+
+- SDK: `Static`
+- Build command: `npm run build`
+- App file: `dist/index.html`
+
+If you want quiz generation to work on Hugging Face, add one of these in the Space settings:
+
+- `VITE_QUIZ_API_URL`
+- `VITE_GROQ_API_KEY`
+
+Recommended:
+
+- Use `VITE_QUIZ_API_URL` for production
+- Do not expose a private API key directly in a public frontend Space
